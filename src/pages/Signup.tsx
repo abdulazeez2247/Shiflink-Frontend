@@ -215,7 +215,7 @@ const Signup = () => {
                 />
               </div>
 
-              {/* <div className="space-y-2">
+              <div className="space-y-2">
                 <Label htmlFor="role">Role</Label>
                 <Select value={formData.role} onValueChange={handleRoleChange} required>
                   <SelectTrigger>
@@ -232,7 +232,7 @@ const Signup = () => {
                     ))}
                   </SelectContent>
                 </Select>
-              </div> */}
+              </div>
 
               <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
