@@ -94,7 +94,7 @@ const Index = () => {
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 rounded-lg flex items-center justify-center">
                 <img  
-                  src="/lovable-uploads/carelink.jpg" 
+                  src="/lovable-uploads/71f6a880-e7c2-4282-bd52-7099b8849e30.png" 
                   alt="Home Health ShiftLink Logo" 
                   className="w-10 h-10 object-contain"
                 />
@@ -291,7 +291,7 @@ const Index = () => {
             <div className="flex items-center justify-center space-x-3 mb-4">
               <div className="w-8 h-8 rounded-lg flex items-center justify-center">
                 <img 
-                  src="/lovable-uploads/carelink.jpg"
+                  src="/lovable-uploads/71f6a880-e7c2-4282-bd52-7099b8849e30.png"
                   alt="Home Health ShiftLink Logo" 
                   className="w-8 h-8 object-contain"
                 />
