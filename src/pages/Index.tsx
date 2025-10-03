@@ -10,7 +10,7 @@ import HowItWorks from '@/components/HowItWorks';
 import SecurityCompliance from '@/components/SecurityCompliance';
 import PlatformStats from '@/components/PlatformStats';
 import CallToAction from '@/components/CallToAction';
-import Logo from '/lovable-uploads/carelink.jpg';
+// import Logo from '/lovable-uploads/carelink.jpg';
 const Index = () => {
   const navigate = useNavigate();
   const { user, signOut, loading } = useAuth();
@@ -93,11 +93,11 @@ const Index = () => {
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 rounded-lg flex items-center justify-center">
-                <img  
+                {/* <img  
                   src={Logo} 
                   alt="Home Health ShiftLink Logo" 
                   className="w-10 h-10 object-contain"
-                />
+                /> */}
                 {/* <img src="" alt="" /> */}
               </div>
               <h1 className="text-xl font-bold text-medical-blue">Home Health ShiftLink</h1>
@@ -291,11 +291,11 @@ const Index = () => {
           <div className="text-center">
             <div className="flex items-center justify-center space-x-3 mb-4">
               <div className="w-8 h-8 rounded-lg flex items-center justify-center">
-                <img 
+                {/* <img 
                   src={Logo}
                   alt="Home Health ShiftLink Logo" 
                   className="w-8 h-8 object-contain"
-                />
+                /> */}
               </div>
               <h3 className="text-lg font-bold">Home Health ShiftLink</h3>
             </div>
