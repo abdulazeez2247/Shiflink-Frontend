@@ -100,7 +100,7 @@ const Index = () => {
                 />
                 {/* <img src="" alt="" /> */}
               </div>
-              <h1 className="text-xl font-bold text-medical-blue">Home Health ShiftLink</h1>
+              <h1 className="text-xl font-bold text-medical-blue">Care Link</h1>
             </div>
             <div className="flex items-center space-x-4">
               <Button variant="ghost" onClick={() => navigate('/courses')}>
