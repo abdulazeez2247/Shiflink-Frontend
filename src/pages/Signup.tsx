@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -34,7 +34,7 @@ const Signup = () => {
     { id: 'dsp', title: 'Direct Support Professional', icon: Users },
     { id: 'agency', title: 'Healthcare Agency', icon: Shield },
     { id: 'trainer', title: 'Credential Trainer', icon: Star },
-    // { id: 'county', title: 'County Board Admin', icon: MapPin }
+    { id: 'county', title: 'County Board Admin', icon: MapPin },
   ];
 
   const handleSubmit = async (e) => {
@@ -286,7 +286,7 @@ const Signup = () => {
                     onCheckedChange={handleTermsChange}
                   />
                   <Label htmlFor="terms" className="font-normal cursor-pointer">
-                    I agree to the Terms of Service and Privacy Policy
+                    I agree to the <Link to="/terms" className="text-medical-blue hover:underline">Terms and Conditions</Link> and <Link to="/privacy" className="text-medical-blue hover:underline">Privacy and Policy</Link>
                   </Label>
                 </div>
 

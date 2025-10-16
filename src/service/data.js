@@ -215,14 +215,14 @@ export const getDSPApplications = async (token, status = null) => {
   return res.json();
 };
 
-// Add this function to your service/data.js file
+
 export const getActiveDSPs = async (token) => {
   const res = await fetch(`${API_BASE_URL}/messaging/active-dsps`, {
     method: "GET",
     headers: { Authorization: `Bearer ${token}` },
   });
   if (!res.ok) {
-    throw new Error((await res.json()).message || "Failed to fetch active DSPs");
+    return [];
   }
   return res.json();
 };
@@ -269,24 +269,81 @@ export const getComplianceReports = async (token) => {
   return res.json();
 };
 
-// ==================== COUNTY ENDPOINTS (County Admin) ====================
-export const getCountyDSPs = async (token) => {
-  const res = await fetch(`${API_BASE_URL}/county/dsps`, {
+export const getConversations = async (token) => {
+  const res = await fetch(`${API_BASE_URL}/messaging/conversations`, {
     method: "GET",
     headers: { Authorization: `Bearer ${token}` },
   });
-  if (!res.ok) throw new Error((await res.json()).message || "Failed to fetch county DSPs");
+  if (!res.ok) {
+  
+    return [];
+  }
+  return res.json();
+};
+export const startConversation = async (token, conversationData) => {
+  const res = await fetch(`${API_BASE_URL}/messaging/conversations`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(conversationData),
+  });
+  if (!res.ok) throw new Error((await res.json()).message || "Failed to start conversation");
   return res.json();
 };
 
-export const verifyDSPCompliance = async (token, dspId) => {
-  const res = await fetch(`${API_BASE_URL}/county/verify-dsp/${dspId}`, {
+export const startShiftConversation = async (token, conversationData) => {
+  const res = await fetch(`${API_BASE_URL}/messaging/conversations/shift`, {
     method: "POST",
-    headers: { Authorization: `Bearer ${token}` },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(conversationData),
   });
-  if (!res.ok) throw new Error((await res.json()).message || "Failed to verify DSP compliance");
+  if (!res.ok) throw new Error((await res.json()).message || "Failed to start shift conversation");
   return res.json();
 };
+
+export const getShiftConversations = async (token, shiftId) => {
+  const res = await fetch(`${API_BASE_URL}/messaging/conversations/shift/${shiftId}`, {
+    method: "GET",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) throw new Error((await res.json()).message || "Failed to fetch shift conversations");
+  return res.json();
+};
+
+export const sendMessage = async (token, conversationId, text) => {
+  const res = await fetch(`${API_BASE_URL}/messaging/messages`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ conversationId, text }),
+  });
+  if (!res.ok) throw new Error((await res.json()).message || "Failed to send message");
+  return res.json();
+};
+
+export const markMessagesAsRead = async (token, messageIds) => {
+  const res = await fetch(`${API_BASE_URL}/messaging/messages/mark-read`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ messageIds }),
+  });
+  if (!res.ok) throw new Error((await res.json()).message || "Failed to mark messages as read");
+  return res.json();
+};
+
+
+
+// ==================== COUNTY ENDPOINTS (County Admin) ====================
 
 export const getCountyStats = async (token) => {
   const res = await fetch(`${API_BASE_URL}/county/stats`, {
@@ -312,6 +369,24 @@ export const getCountyRecentActivity = async (token) => {
     headers: { Authorization: `Bearer ${token}` },
   });
   if (!res.ok) throw new Error((await res.json()).message || "Failed to fetch recent activity");
+  return res.json();
+};
+
+export const getCountyDSPs = async (token) => {
+  const res = await fetch(`${API_BASE_URL}/county/dsps`, {
+    method: "GET",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) throw new Error((await res.json()).message || "Failed to fetch county DSPs");
+  return res.json();
+};
+
+export const verifyDSPCompliance = async (token, dspId) => {
+  const res = await fetch(`${API_BASE_URL}/county/verify-dsp/${dspId}`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) throw new Error((await res.json()).message || "Failed to verify DSP compliance");
   return res.json();
 };
 
@@ -364,7 +439,6 @@ export const reinstateUser = async (token, userId) => {
   if (!res.ok) throw new Error((await res.json()).message || "Failed to reinstate user");
   return res.json();
 };
-
 // ==================== TRAINER ENDPOINTS (Trainer Users) ====================
 export const createCourse = async (token, courseData) => {
   const res = await fetch(`${API_BASE_URL}/trainer/courses`, {
@@ -378,7 +452,6 @@ export const createCourse = async (token, courseData) => {
   if (!res.ok) throw new Error((await res.json()).message || "Failed to create course");
   return res.json();
 };
-
 export const getTrainerCourses = async (token) => {
   const res = await fetch(`${API_BASE_URL}/trainer/courses`, {
     method: "GET",
@@ -441,136 +514,3 @@ export const deleteCourse = async (token, courseId) => {
   return res.json();
 };
 
-// ==================== MESSAGING ENDPOINTS (All Roles) ====================
-export const getConversations = async (token) => {
-  const res = await fetch(`${API_BASE_URL}/messaging/conversations`, {
-    method: "GET",
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  if (!res.ok) {
-    throw new Error((await res.json()).message || "Failed to fetch conversations");
-  }
-  return res.json();
-};
-
-export const sendMessage = async (token, conversationId, text) => {
-  const res = await fetch(`${API_BASE_URL}/messaging/send-message`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({ conversationId, text }),
-  });
-  if (!res.ok) {
-    throw new Error((await res.json()).message || "Failed to send message");
-  }
-  return res.json();
-};
-
-export const startConversation = async (token, participantId) => {
-  const res = await fetch(`${API_BASE_URL}/messaging/start-conversation`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({ participantId }),
-  });
-  if (!res.ok) {
-    throw new Error((await res.json()).message || "Failed to start conversation");
-  }
-  return res.json();
-};
-
-export const markMessagesAsRead = async (token, messageIds) => {
-  const res = await fetch(`${API_BASE_URL}/messaging/mark-read`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({ messageIds }),
-  });
-  if (!res.ok) {
-    throw new Error((await res.json()).message || "Failed to mark messages as read");
-  }
-  return res.json();
-};
-// Add these to your frontend data.js file:
-export const startShiftConversation = async (token, shiftId, participantId) => {
-  const res = await fetch(`${API_BASE_URL}/messaging/shift-conversation`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({ shiftId, participantId }),
-  });
-  if (!res.ok) {
-    throw new Error((await res.json()).message || "Failed to start shift conversation");
-  }
-  return res.json();
-};
-
-export const getShiftConversations = async (token, shiftId) => {
-  const res = await fetch(`${API_BASE_URL}/messaging/shift/${shiftId}`, {
-    method: "GET",
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  if (!res.ok) {
-    throw new Error((await res.json()).message || "Failed to fetch shift conversations");
-  }
-  return res.json();
-};
-// Compliance API functions
-
-// Add this function to your data.js
-// export const getShiftComplianceStatus = async (token) => {
-//   const res = await fetch(`${API_BASE_URL}/shifts/compliance-status`, {
-//     method: "GET",
-//     headers: { Authorization: `Bearer ${token}` },
-//   });
-//   if (!res.ok) {
-//     throw new Error("Failed to check shift compliance status");
-//   }
-//   return res.json();
-// };
-
-// export const getRequiredDocuments = async (token) => {
-//   const res = await fetch(`${API_BASE_URL}/compliance/required-documents`, {
-//     method: "GET",
-//     headers: { Authorization: `Bearer ${token}` },
-//   });
-//   if (!res.ok) {
-//     throw new Error("Failed to fetch required documents");
-//   }
-//   return res.json();
-// };
-
-// export const uploadCredential = async (token, formData) => {
-//   const res = await fetch(`${API_BASE_URL}/compliance/upload-credential`, {
-//     method: "POST",
-//     headers: { 
-//       Authorization: `Bearer ${token}`,
-//       // Note: Don't set Content-Type for FormData
-//     },
-//     body: formData,
-//   });
-//   if (!res.ok) {
-//     const errorData = await res.json();
-//     throw new Error(errorData.message || "Failed to upload credential");
-//   }
-//   return res.json();
-// };
-
-// export const getUserCredentials = async (token) => {
-//   const res = await fetch(`${API_BASE_URL}/compliance/credentials`, {
-//     method: "GET",
-//     headers: { Authorization: `Bearer ${token}` },
-//   });
-//   if (!res.ok) {
-//     throw new Error("Failed to fetch user credentials");
-//   }
-//   return res.json();
-// };

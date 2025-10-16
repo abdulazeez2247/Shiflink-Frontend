@@ -75,7 +75,7 @@ import AdminDashboard from "./pages/dashboards/AdminDashboard";
 import TrainerDashboard from "./pages/dashboards/TrainerDashboard";
 import DSPDashboard from "./pages/dashboards/DSPDashboard";
 import AgencyDashboard from "./pages/dashboards/AgencyDashboard";
-// import CountyDashboard from "./pages/dashboards/CountyDashboard";
+import CountyDashboard from "./pages/dashboards/CountyDashboard";
 import CoursesPage from "./pages/CoursesPage";
 import LearningPage from "./pages/LearningPage";
 import ShiftBrowserPage from "./pages/ShiftBrowserPage";
@@ -107,7 +107,7 @@ const App = () => (
             <Route path="/dashboard/trainer" element={<TrainerDashboard />} />
             <Route path="/dashboard/dsp" element={<DSPDashboard />} />
             <Route path="/dashboard/agency" element={<AgencyDashboard />} />
-            {/* <Route path="/dashboard/county" element={<CountyDashboard />} /> */}
+            <Route path="/dashboard/county" element={<CountyDashboard />} />
             <Route path="/courses" element={<CoursesPage />} />
             <Route path="/learning" element={<LearningPage />} />
             <Route path="/shifts" element={<ShiftBrowserPage />} />
